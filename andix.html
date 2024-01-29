@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Facebook Signup Form</title>
+  <style>
+    .error-message {
+      color: red;
+
+    }
+  </style>
+</head>
+<body>
+  <h2>Create an Account</h2>
+  <form id="signup-form" onsubmit="validateForm(event)">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <input type="submit" value="Sign Up">
+  </form>
+
+  <script>
+    function validateForm(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Get form input values
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+
+      // Validate name
+      if (name === "") {
+        displayErrorMessage("Please enter your name.");
+        return;
+      }
+
+      // Validate email
+      if (email === "") {
+        displayErrorMessage("Please enter your email address.");
+        return;
+      } else if (!validateEmail(email)) {
+        displayErrorMessage("Please enter a valid email address.");
+        return;
+      }
+
+      // Validate password
+      if (password === "") {
+        displayErrorMessage("Please enter a password.");
+        return;
+      } else if (password.length < 8) {
+        displayErrorMessage("Password must be at least 8 characters long.");
+        return;
+      }
+
+      // If all validations pass, display success message
+      displaySuccessMessage("Signup successful!");
+    }
+
+    function validateEmail(email) {
+      // Basic email validation using regular expression
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function displayErrorMessage(message) {
+      var errorElement = document.getElementById("error-message");
+      errorElement.textContent = message;
+    }
+
+    function displaySuccessMessage(message) {
+      var successElement = document.createElement("div");
+      successElement.textContent = message;
+      document.body.appendChild(successElement);
+    }
+  </script>
+</body>
+</html>
